@@ -877,15 +877,6 @@ body.cursor-click .cursor-dot {
   min-height: 100vh;
 }
 
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: rgba(77, 232, 160, 0.12);
-  pointer-events: none;
-  z-index: 15;
-}
-
 .we-inner {
   max-width: 1200px;
   margin: 0 auto;
