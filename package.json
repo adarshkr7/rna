@@ -1,0 +1,23 @@
+{
+  "name": "rna-iitp-website",
+  "version": "0.8.26",
+  "description": "Rocketry & Aviation Club | IIT Patna - Modern Vite + TypeScript + Tailwind",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@studio-freight/lenis": "^1.0.42",
+    "gsap": "^3.14.2"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.0"
+  }
+}

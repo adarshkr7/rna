@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rocketry & Aviation Club | IIT Patna</title>
+    <link rel="icon" type="image/svg+xml" href="/src/logo.svg">
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&f[]=clash-display@600,700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- Scroll Progress Bar -->
+        <div id="scroll-prog"></div>
+        
+        <!-- Grain Overlay -->
+        <div class="grain"></div>
+        
+        <!-- Mouse Trail Canvas -->
+        <canvas id="mouse-trail"></canvas>
+
+        <!-- Section Dot Navigation
+        <div id="snav">
+            <div class="sd" data-l="Hero" data-t="#hero"></div>
+            <div class="sd" data-l="About" data-t="#manifesto"></div>
+            <div class="sd" data-l="Disciplines" data-t="#principles"></div>
+            <div class="sd" data-l="Gallery" data-t="#cinematic"></div>
+            <div class="sd" data-l="Team" data-t="#we"></div>
+            <div class="sd" data-l="Works" data-t="#works"></div>
+            <div class="sd" data-l="Progress" data-t="#progress"></div>
+            <div class="sd" data-l="Contact" data-t="#contact"></div>
+        </div> -->
+
+        <!-- Preloader -->
+        <div id="preloader">
+            <div class="scan-line"></div>
+            <div id="preloader-tag">IIT Patna · est. 2008</div>
+            <div id="preloader-pct">0%</div>
+            <div id="preloader-bar-wrap"><div id="preloader-bar"></div></div>
+            <div id="preloader-label">Initializing systems</div>
+        </div>
+
+        <!-- Cursor Elements -->
+        <div class="cursor-dot hidden md:block"></div>
+        <div class="cursor-ring hidden md:block"></div>
+
+        <!-- Navigation -->
+        <nav id="main-nav">
+            <div class="nav-logo-wrap">
+                <img src="/src/logo.svg" alt="RNA" class="h-12 w-auto">
+                <!-- <span class="nav-version hidden md:inline">v_ 0.8.26</span> -->
+            </div>
+            <div class="nav-links hidden md:flex">
+                <a href="team.html">Team</a>
+                <a href="#works">Works</a>
+                <a href="#progress">Progress</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="nav-dot" id="nav-dot-mag"></div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section id="hero" data-s="0">
+            <canvas id="glcanvas"></canvas>
+            <canvas id="particle-canvas"></canvas>
+            <div class="hero-vig"></div>
+            <div class="hero-content">
+                <p class="hero-eyebrow">Indian Institute of Technology Patna</p>
+                <h1 class="hero-title">
+                    <span class="hero-line"><span class="hero-word">Rocketry</span></span>
+                    <span class="hero-line"><span class="hero-word">&amp;&nbsp;</span><span class="hero-word accent">Aviation</span></span>
+                    <span class="hero-line"><span class="hero-word">Club</span></span>
+                </h1>
+                <div class="hero-bar">
+                    <p class="hero-desc">Pushing boundaries<br> of aerodynamics &amp; propulsion.<br>Student-led. Mission-driven.</p>
+                    <!-- <div class="scroll-cue"><span>Scroll</span><div class="scroll-line"></div></div> -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Marquee -->
+        <div class="marquee-wrap">
+            <div class="marquee-track">
+                <span class="mq-item">Propulsion<span class="mq-sep"></span></span>
+                <span class="mq-item">Avionics<span class="mq-sep"></span></span>
+                <span class="mq-item">Metal Additive Manufacturing<span class="mq-sep"></span></span>
+                <span class="mq-item">PCB Design<span class="mq-sep"></span></span>
+                <span class="mq-item">Flight Control Systems<span class="mq-sep"></span></span>
+                <span class="mq-item">Static Fire Testing<span class="mq-sep"></span></span>
+                <span class="mq-item">CAD Modelling<span class="mq-sep"></span></span>
+                <span class="mq-item">Telemetry<span class="mq-sep"></span></span>
+                <span class="mq-item">Propulsion<span class="mq-sep"></span></span>
+                <span class="mq-item">Avionics<span class="mq-sep"></span></span>
+                <span class="mq-item">Metal Additive Manufacturing<span class="mq-sep"></span></span>
+                <span class="mq-item">PCB Design<span class="mq-sep"></span></span>
+                <span class="mq-item">Flight Control Systems<span class="mq-sep"></span></span>
+                <span class="mq-item">Static Fire Testing<span class="mq-sep"></span></span>
+                <span class="mq-item">CAD Modelling<span class="mq-sep"></span></span>
+                <span class="mq-item">Telemetry<span class="mq-sep"></span></span>
+            </div>
+        </div>
+
+        <!-- Manifesto Section -->
+        <section id="manifesto" data-s="1">
+            <div class="manifesto-inner">
+                <div class="manifesto-label"><span>/ 01</span>Who we are</div>
+                <div>
+                    <p class="manifesto-text reveal-up">
+                        We are a collective of <span class="em">engineers</span>, <span class="em">physicists</span>,
+                        and <span class="em">dreamers</span> — dedicated to the <span class="eg">art of flight.</span>
+                    </p>
+                    <div class="manifesto-sub">
+                        <div class="m-stat"><div class="m-stat-num counter" data-target="8" data-suffix="+">0</div><div class="m-stat-lbl">Years active</div></div>
+                        <div class="m-stat"><div class="m-stat-num counter" data-target="480" data-suffix="">0</div><div class="m-stat-lbl">Newton-seconds impulse</div></div>
+                        <div class="m-stat"><div class="m-stat-num counter" data-target="4" data-suffix="th">0</div><div class="m-stat-lbl">Static fire achieved</div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Principles Section -->
+        <section id="principles" data-s="2">
+            <div class="p-inner">
+                <span class="eyebrow">/ 02 — Disciplines</span>
+                <div class="p-grid">
+                    <div class="p-item reveal-up">
+                        <span class="p-num">001</span>
+                        <div class="p-heading scramble" data-text="Propulsion">Propulsion</div>
+                        <p class="p-body">In-house KNDX propellant synthesis and solid rocket motor design. Static fire testing with instrumented thrust stands.</p>
+                    </div>
+                    <div class="p-item reveal-up">
+                        <span class="p-num">002</span>
+                        <div class="p-heading scramble" data-text="Avionics">Avionics</div>
+                        <p class="p-body">Custom flight computers, real-time telemetry and PCB design for data acquisition from launch to recovery.</p>
+                    </div>
+                    <div class="p-item reveal-up">
+                        <span class="p-num">003</span>
+                        <div class="p-heading scramble" data-text="Structures">Structures</div>
+                        <p class="p-body">Metal additive manufacturing, CAD-driven airframe design, and thermal insulation for extreme environments.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rocket Scroll Section -->
+        <section id="rocket-scroll">
+            <img id="scrolling-rocket" src="/src/rafale.png" alt="Rocket">
+        </section>
+
+        <!-- Cinematic Horizontal Scroll
+        <section id="cinematic" data-s="3">
+            <div id="cin-sticky">
+                <div id="cin-track">
+                    <div class="cin-panel cin-panel-1">
+                        <div class="cin-bg"></div><div class="cin-overlay"></div>
+                        <div class="cin-content"><span class="cin-num">01 / 04 — The Team</span><h3 class="cin-title">Built by<br>Students.</h3><p class="cin-body">Every component designed, tested, and launched by IIT Patna students passionate about aerospace.</p></div>
+                        <div class="cin-prog" id="cin-bar"></div>
+                        <div class="cin-hint">→ Scroll to explore</div>
+                    </div>
+                    <div class="cin-panel cin-panel-2">
+                        <div class="cin-bg"></div><div class="cin-overlay"></div>
+                        <div class="cin-content"><span class="cin-num">02 / 04 — Propulsion</span><h3 class="cin-title">Fire on<br>Command.</h3><p class="cin-body">In-house solid propellant synthesis achieving I-class motor performance — 480 Ns total impulse.</p></div>
+                    </div>
+                    <div class="cin-panel cin-panel-3">
+                        <div class="cin-bg"></div><div class="cin-overlay"></div>
+                        <div class="cin-content"><span class="cin-num">03 / 04 — Launch</span><h3 class="cin-title">Into the<br>Sky.</h3><p class="cin-body">Taara — our first flight vehicle, carrying years of engineering, ambition, and a little drama.</p></div>
+                    </div>
+                    <div class="cin-panel cin-panel-4">
+                        <div class="cin-bg"></div><div class="cin-overlay"></div>
+                        <div class="cin-content"><span class="cin-num">04 / 04 — Innovation</span><h3 class="cin-title">Never<br>Stop.</h3><p class="cin-body">Continuous iteration. 4 static fires. Every test teaches us something new about going higher.</p></div>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+
+        <!-- Team Section -->
+        <section id="we" data-s="4">
+            <div class="we-inner">
+                <div class="we-img-wrap">
+                    <img src="/src/team-desc.jpg" loading="lazy" alt="Team RNA">
+                    <span class="we-img-tag">Team RNA · IIT Patna</span>
+                </div>
+                <div>
+                    <span class="eyebrow" style="margin-bottom:2rem">/ 03 — The Team</span>
+                    <h2 class="we-heading reveal-up">
+                        From high-altitude<br><span class="em">sounding rockets</span><br>
+                        to <span class="em">autonomous drones</span> —<br>we build what others only simulate.
+                    </h2>
+                </div>
+            </div>
+        </section>
+
+        <!-- Works Section -->
+        <section id="works" data-s="5">
+            <div class="works-hdr">
+                <div><span class="eyebrow">/ 04 — Capabilities</span><h2 class="works-title glitch" data-text="WHAT WE DO">WHAT<br>WE DO</h2></div>
+                <div class="works-meta hidden md:block">Eight domains<br>of mastery<br><span style="color:var(--accent-dim)">→ hover to reveal</span></div>
+            </div>
+            <div class="works-grid">
+                <div class="wc wc-1"><img src="/src/noz1.png" loading="lazy" alt="Metal AM"><div class="wc-glare"></div><div class="wc-info"><span class="wc-num">001</span><span class="wc-tag">Metal Additive Manufacturing</span></div></div>
+                <div class="wc wc-2"><img src="/src/pcb1.png" loading="lazy" alt="PCB"><div class="wc-glare"></div><div class="wc-info"><span class="wc-num">002</span><span class="wc-tag">PCB Designing</span></div></div>
+                <div class="wc wc-3"><img src="/src/prop1.png" loading="lazy" alt="Propulsion"><div class="wc-glare"></div><div class="wc-info"><span class="wc-num">003</span><span class="wc-tag">Propulsion System</span></div></div>
+                <div class="wc wc-4"><img src="/src/prop2.png" loading="lazy" alt="CAD"><div class="wc-glare"></div><div class="wc-info"><span class="wc-num">004</span><span class="wc-tag">CAD</span></div></div>
+                <div class="wc wc-5"><img src="/src/schematic.jpeg" loading="lazy" alt="Schematic"><div class="wc-glare"></div><div class="wc-info"><span class="wc-num">005</span><span class="wc-tag">PCB Schematic</span></div></div>
+                <div class="wc wc-6"><img src="/src/srcn/IMG_3232.JPG.jpeg" loading="lazy" alt="Launch"><div class="wc-glare"></div><div class="wc-info"><span class="wc-num">006</span><span class="wc-tag">Launch</span></div></div>
+                <div class="wc wc-7"><img src="/src/srcn/prop.jpeg" loading="lazy" alt="Static Fire"><div class="wc-glare"></div><div class="wc-info"><span class="wc-num">007</span><span class="wc-tag">Static Fire</span></div></div>
+                <div class="wc wc-8"><img src="/src/clg.jpeg" loading="lazy" alt="Research"><div class="wc-glare"></div><div class="wc-info"><span class="wc-num">008</span><span class="wc-tag">Research</span></div></div>
+            </div>
+            <div style="display:flex;justify-content:center">
+                <button class="mag-btn" id="explore-btn"><span>Explore All Projects</span></button>
+            </div>
+        </section>
+
+        <!-- Progress Timeline Section -->
+        <section id="progress" data-s="6">
+            <div class="prog-container">
+                <div class="prog-hdr"><span class="prog-eyebrow">/ 05 — Timeline</span><h2 class="prog-title">Progress</h2></div>
+                <div class="tl-vertical">
+                    <!-- Timeline Item -->
+                    <div class="tl-item">
+                        <div class="tl-marker">
+                            <div class="tl-dot"></div>
+                            <div class="tl-connector"></div>
+                        </div>
+                        <div class="tl-content">
+                            <div class="tl-year">2018</div>
+                            <h3 class="tl-heading">Inception</h3>
+                            <p class="tl-date">August 15, 2018</p>
+                            <p class="tl-body">The Rocketry & Aviation Club was established to advance student-led aerospace research and innovation at IIT Patna.</p>
+                        </div>
+                    </div>
+                    <!-- Timeline Item -->
+                    <div class="tl-item">
+                        <div class="tl-marker">
+                            <div class="tl-dot"></div>
+                            <div class="tl-connector"></div>
+                        </div>
+                        <div class="tl-content">
+                            <div class="tl-year">2021</div>
+                            <h3 class="tl-heading">Avionics</h3>
+                            <p class="tl-date">September 05, 2021</p>
+                            <p class="tl-body">Designed and developed custom flight computers and telemetry systems to enable reliable real-time data acquisition during flight operations.</p>
+                        </div>
+                    </div>
+                    <!-- Timeline Item -->
+                    <div class="tl-item">
+                        <div class="tl-marker">
+                            <div class="tl-dot"></div>
+                            <div class="tl-connector"></div>
+                        </div>
+                        <div class="tl-content">
+                            <div class="tl-year">2022</div>
+                            <h3 class="tl-heading">Propulsion</h3>
+                            <p class="tl-date">April 18, 2022</p>
+                            <p class="tl-body">Successfully conducted the first static firing of a solid rocket motor, meeting predefined thrust and burn duration parameters.</p>
+                        </div>
+                    </div>
+                    <!-- Timeline Item -->
+                    <div class="tl-item">
+                        <div class="tl-marker">
+                            <div class="tl-dot"></div>
+                            <div class="tl-connector"></div>
+                        </div>
+                        <div class="tl-content">
+                            <div class="tl-year">2025</div>
+                            <h3 class="tl-heading">Launch</h3>
+                            <p class="tl-date">April 18, 2025</p>
+                            <p class="tl-body">Introduced “Taara,” the club’s first flight vehicle, representing a significant milestone in integrated design, testing, and launch capabilities.</p>
+
+                        </div>
+                    </div>
+                    <!-- Timeline Item -->
+                    <div class="tl-item">
+                        <div class="tl-marker">
+                            <div class="tl-dot"></div>
+                        </div>
+                        <div class="tl-content">
+                            <div class="tl-year">2026</div>
+                            <h3 class="tl-heading">Innovation</h3>
+                            <p class="tl-date">January 16, 2026</p>
+                            <p class="tl-body">Completed the fourth static fire test using in-house KNDX propellant and advanced thermal insulation, achieving an I-class motor performance of 480 Ns total impulse.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer id="contact" data-s="7">
+            <video id="footer-video" autoplay muted loop playsinline>
+                <source src="/src/footer-rocket.mp4" type="video/mp4">
+            </video>
+            <div class="footer-top">
+                <div>
+                    <img src="/src/iitplogo.png" alt="IIT Patna" class="h-12 w-auto mb-5">
+                    <span class="footer-loc-lbl">Location</span>
+                    <div class="footer-loc">IIT Patna,<br>Bihta, Bihar</div>
+                </div>
+                <div>
+                    <span class="footer-soc-lbl">Socials</span>
+                    <ul class="footer-socs">
+                        <li><a href="https://www.instagram.com/rna.iitp/">Instagram</a></li>
+                        <li><a href="https://www.linkedin.com/company/rocketry-and-aviation-club-iit-patna/">LinkedIn</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-main">
+                <div class="footer-wordmark"><span class="footer-wordmark-text">Launch Now</span></div>
+            </div>
+            <!-- <div id="terminal">
+                <div class="term-hdr">
+                    <div class="term-dot" style="background:#ff5f57"></div>
+                    <div class="term-dot" style="background:#ffbd2e"></div>
+                    <div class="term-dot" style="background:#28c840"></div>
+                </div>
+                <div class="term-line"><span class="term-prompt">rna@iitp:~$ </span><span id="term-text"></span><span class="term-cur"></span></div>
+            </div> -->
+            <div class="footer-btm">
+                <span class="footer-copy">© 2026 Rocketry &amp; Aviation Club, IIT Patna.</span>
+                <span class="footer-copy" style="cursor:none;color:rgba(77,232,160,.3);transition:color .3s" onmouseover="this.style.color='rgba(77,232,160,.7)'" onmouseout="this.style.color='rgba(77,232,160,.3)'">[ ADARSH ]</span>
+            </div>
+        </footer>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
