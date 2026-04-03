@@ -724,7 +724,7 @@ body.cursor-click .cursor-dot {
   height: 100vh;
   position: relative;
   overflow: hidden;
-  background-image: url('/src/rocket-bg.jpg');
+  background-image: url('/public/src/rocket-bg.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -784,7 +784,7 @@ body.cursor-click .cursor-dot {
 .cin-bg {
   position: absolute;
   inset: 0;
-  background-image: url('/src/nebula.jpg');
+  background-image: url('/public/src/nebula.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
