@@ -15,9 +15,6 @@
         <!-- Grain Overlay -->
         <div class="grain"></div>
         
-        <!-- Mouse Trail Canvas -->
-        <canvas id="mouse-trail"></canvas>
-
         <!-- Section Dot Navigation
         <div id="snav">
             <div class="sd" data-l="Hero" data-t="#hero"></div>
@@ -39,41 +36,53 @@
             <div id="preloader-label">Initializing systems</div>
         </div>
 
-        <!-- Cursor Elements -->
-        <div class="cursor-dot hidden md:block"></div>
-        <div class="cursor-ring hidden md:block"></div>
-
         <!-- Navigation -->
         <nav id="main-nav">
-            <div class="nav-logo-wrap">
+            <a class="nav-logo-wrap" href="#hero" aria-label="Rocketry &amp; Aviation Club — home">
                 <img src="/public/src/logo.svg" alt="RNA" class="h-12 w-auto">
-                <!-- <span class="nav-version hidden md:inline">v_ 0.8.26</span> -->
-            </div>
+            </a>
             <div class="nav-links hidden md:flex">
-                <a href="team.html">Team</a>
+                <a href="#manifesto">About</a>
+                <a href="#team">Team</a>
                 <a href="#works">Works</a>
                 <a href="#progress">Progress</a>
                 <a href="#contact">Contact</a>
             </div>
-            <div class="nav-dot" id="nav-dot-mag"></div>
+            <div class="nav-dot hidden md:block" id="nav-dot-mag"></div>
+            <button id="nav-toggle" class="nav-toggle md:hidden" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu">
+                <span></span><span></span><span></span>
+            </button>
         </nav>
+
+        <!-- Mobile Menu -->
+        <div id="nav-menu" class="nav-menu">
+            <a href="#manifesto"><span class="nav-menu-num">01</span>About</a>
+            <a href="#team"><span class="nav-menu-num">02</span>Team</a>
+            <a href="#works"><span class="nav-menu-num">03</span>Works</a>
+            <a href="#progress"><span class="nav-menu-num">04</span>Progress</a>
+            <a href="#contact"><span class="nav-menu-num">05</span>Contact</a>
+        </div>
 
         <!-- Hero Section -->
         <section id="hero" data-s="0">
-            <canvas id="glcanvas"></canvas>
-            <canvas id="particle-canvas"></canvas>
-            <div class="hero-vig"></div>
-            <div class="hero-content">
-                <p class="hero-eyebrow">Indian Institute of Technology Patna</p>
-                <h1 class="hero-title">
-                    <span class="hero-line"><span class="hero-word">Rocketry</span></span>
-                    <span class="hero-line"><span class="hero-word">&amp;&nbsp;</span><span class="hero-word accent">Aviation</span></span>
-                    <span class="hero-line"><span class="hero-word">Club</span></span>
-                </h1>
-                <div class="hero-bar">
-                    <p class="hero-desc">Pushing boundaries<br> of aerodynamics &amp; propulsion.<br>Student-led. Mission-driven.</p>
-                    <!-- <div class="scroll-cue"><span>Scroll</span><div class="scroll-line"></div></div> -->
+            <div id="blackhole" aria-hidden="true"></div>
+            <div class="hero-vig" aria-hidden="true"></div>
+            <div class="hero-inner">
+                <div class="hero-content">
+                    <p class="hero-eyebrow">Indian Institute of Technology Patna</p>
+                    <h1 class="hero-title">
+                        <span class="hero-line"><span class="hero-word">Rocketry</span></span>
+                        <span class="hero-line"><span class="hero-word">&amp;&nbsp;</span><span class="hero-word accent">Aviation</span></span>
+                        <span class="hero-line"><span class="hero-word">Club</span></span>
+                    </h1>
+                    <div class="hero-bar">
+                        <p class="hero-desc">Pushing boundaries<br> of aerodynamics &amp; propulsion.<br>Student-led. Mission-driven.</p>
+                    </div>
                 </div>
+            </div>
+            <div class="hero-readout" aria-hidden="true">
+                <span class="hud-k">Gargantua · time dilation</span>
+                <span class="hud-v" id="stage-dilation">000.00 h</span>
             </div>
         </section>
 
@@ -143,7 +152,12 @@
 
         <!-- Rocket Scroll Section -->
         <section id="rocket-scroll">
-            <img id="scrolling-rocket" src="/public/src/rafale.png" alt="Rocket">
+            <div class="grid-bg" aria-hidden="true"></div>
+            <div id="scrolling-rocket"></div>
+            <div class="rs-hud">
+                <span class="rs-k">Taara · 01</span>
+                <span class="rs-v" id="rs-deg">000.0°</span>
+            </div>
         </section>
 
         <!-- Cinematic Horizontal Scroll
@@ -189,10 +203,70 @@
             </div>
         </section>
 
+        <!-- Team Roster Section -->
+        <section id="team" data-s="5">
+            <div class="team-inner">
+                <div class="team-hdr">
+                    <span class="eyebrow">/ 04 — Team Release</span>
+                    <h2 class="team-title">The<br>Crew</h2>
+                </div>
+                <div class="team-grid">
+                    <div class="team-col reveal-up">
+                        <div class="team-div">
+                            <span class="team-div-num">01</span>
+                            <h3 class="team-div-name">Propulsion</h3>
+                        </div>
+                        <ol class="team-list">
+                            <li>Arunya Guha</li>
+                            <li>Anshul Kumar</li>
+                            <li>Chinmay Choudhary</li>
+                            <li>Aryan Verma</li>
+                        </ol>
+                    </div>
+                    <div class="team-col reveal-up">
+                        <div class="team-div">
+                            <span class="team-div-num">02</span>
+                            <h3 class="team-div-name">Airframe &amp; Recovery</h3>
+                        </div>
+                        <ol class="team-list">
+                            <li>Allu Bharath Kumar</li>
+                            <li>Abhishek Dwivedi</li>
+                            <li>Tejomurtula Sai Rama Krishna</li>
+                        </ol>
+                    </div>
+                    <div class="team-col reveal-up">
+                        <div class="team-div">
+                            <span class="team-div-num">03</span>
+                            <h3 class="team-div-name">Avionics</h3>
+                        </div>
+                        <ol class="team-list">
+                            <li>Nihit Raj</li>
+                            <li>Tanmay Wankhade</li>
+                            <li>Harsh Kumar Singh</li>
+                            <li>Jayendra Singh</li>
+                            <li>Adi Singh</li>
+                            <li>Garvit Sharma</li>
+                        </ol>
+                    </div>
+                    <div class="team-col reveal-up">
+                        <div class="team-div">
+                            <span class="team-div-num">04</span>
+                            <h3 class="team-div-name">Web Dev &amp; Management</h3>
+                        </div>
+                        <ol class="team-list">
+                            <li>Rhut Agravat</li>
+                            <li>Samriddhi</li>
+                            <li>Bhavesh Lokesh Agarwal</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Works Section -->
-        <section id="works" data-s="5">
+        <section id="works" data-s="6">
             <div class="works-hdr">
-                <div><span class="eyebrow">/ 04 — Capabilities</span><h2 class="works-title glitch" data-text="WHAT WE DO">WHAT<br>WE DO</h2></div>
+                <div><span class="eyebrow">/ 05 — Capabilities</span><h2 class="works-title glitch" data-text="WHAT WE DO">WHAT<br>WE DO</h2></div>
                 <div class="works-meta hidden md:block">Eight domains<br>of mastery<br><span style="color:var(--accent-dim)">→ hover to reveal</span></div>
             </div>
             <div class="works-grid">
@@ -211,9 +285,9 @@
         </section>
 
         <!-- Progress Timeline Section -->
-        <section id="progress" data-s="6">
+        <section id="progress" data-s="7">
             <div class="prog-container">
-                <div class="prog-hdr"><span class="prog-eyebrow">/ 05 — Timeline</span><h2 class="prog-title">Progress</h2></div>
+                <div class="prog-hdr"><span class="prog-eyebrow">/ 06 — Timeline</span><h2 class="prog-title">Progress</h2></div>
                 <div class="tl-vertical">
                     <!-- Timeline Item -->
                     <div class="tl-item">
@@ -285,7 +359,7 @@
         </section>
 
         <!-- Footer -->
-        <footer id="contact" data-s="7">
+        <footer id="contact" data-s="8">
             <video id="footer-video" autoplay muted loop playsinline>
                 <source src="/public/src/footer-rocket.mp4" type="video/mp4">
             </video>
@@ -316,7 +390,7 @@
             </div> -->
             <div class="footer-btm">
                 <span class="footer-copy">© 2026 Rocketry &amp; Aviation Club, IIT Patna.</span>
-                <span class="footer-copy" style="cursor:none;color:rgba(77,232,160,.3);transition:color .3s" onmouseover="this.style.color='rgba(77,232,160,.7)'" onmouseout="this.style.color='rgba(77,232,160,.3)'">[ ADARSH ]</span>
+                <span class="footer-copy" style="cursor:pointer;color:rgba(240, 180, 106,.3);transition:color .3s" onmouseover="this.style.color='rgba(240, 180, 106,.7)'" onmouseout="this.style.color='rgba(240, 180, 106,.3)'">[ ADARSH ]</span>
             </div>
         </footer>
     </div>
