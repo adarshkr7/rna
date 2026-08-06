@@ -3,17 +3,20 @@ const SVG_NS = 'http://www.w3.org/2000/svg';
 const MOBILE = window.innerWidth < 768;
 const TILT = -17;
 
-// A wide frame that bleeds off the edges reads well on desktop, but on a narrow
-// viewport it would crop the disk away entirely — so mobile gets a squarer,
-// tighter composition that is fitted rather than sliced.
-const W = MOBILE ? 700 : 1000;
-const H = 620;
-const CX = MOBILE ? 350 : 655;
-const CY = 300;
-const HORIZON = MOBILE ? 118 : 150;
+// Desktop frames the hole right-of-centre and lets the disk bleed off both
+// edges. A phone is too narrow for that, so the composition is anchored to the
+// right edge instead — the horizon sits exactly on it, leaving the left half of
+// the hole filling the right side of the screen with the disk sweeping across.
+const W = MOBILE ? 620 : 1000;
+const H = MOBILE ? 900 : 620;
+const CX = MOBILE ? W : 655;
+// Sits high on mobile: the disk sweeps down as it runs left, so centring it
+// would drag the bright band straight through the headline.
+const CY = MOBILE ? H * 0.35 : 300;
+const HORIZON = MOBILE ? 165 : 150;
 
 const DISK_IN = HORIZON * 1.15;
-const DISK_OUT = MOBILE ? 330 : 440;
+const DISK_OUT = MOBILE ? 430 : 440;
 const DISK_STRANDS = MOBILE ? 11 : 17;
 /** How many of the inner disk strands are redrawn across the sphere's face.
  *  Each one is a second full-size stroked path per frame, so keep it small. */
@@ -88,7 +91,9 @@ export function initBlackHole(): void {
 
   const svg = document.createElementNS(SVG_NS, 'svg');
   svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
-  svg.setAttribute('preserveAspectRatio', MOBILE ? 'xMidYMid meet' : 'xMidYMid slice');
+  // xMax pins the viewBox's right edge to the container's, so the horizon
+  // stays exactly half off-screen no matter how the crop falls.
+  svg.setAttribute('preserveAspectRatio', MOBILE ? 'xMaxYMid slice' : 'xMidYMid slice');
   svg.setAttribute('class', 'bh-svg');
   svg.setAttribute('aria-hidden', 'true');
 
