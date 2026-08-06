@@ -30,6 +30,56 @@ export function setupComponents(): void {
   setupMagneticElements();
   setup3DTilt();
   setupSectionNav();
+  setupNav();
+}
+
+function setupNav(): void {
+  const nav = document.getElementById('main-nav');
+  const toggle = document.getElementById('nav-toggle');
+  const menu = document.getElementById('nav-menu');
+  if (!nav) return;
+
+  // Solid backing once the bar is over content — without it the marquee reads
+  // straight through the links.
+  const onScroll = (): void => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  const closeMenu = (): void => {
+    document.body.classList.remove('menu-open');
+    toggle?.setAttribute('aria-expanded', 'false');
+    toggle?.setAttribute('aria-label', 'Open menu');
+  };
+
+  if (toggle && menu) {
+    toggle.addEventListener('click', () => {
+      const open = document.body.classList.toggle('menu-open');
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    });
+    menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeMenu();
+    });
+  }
+
+  // Highlight whichever section is currently in view.
+  const links = Array.from(nav.querySelectorAll<HTMLAnchorElement>('.nav-links a'));
+  for (const link of links) {
+    const target = document.querySelector(link.getAttribute('href') || '');
+    if (!target) continue;
+
+    new IntersectionObserver(
+      (entries) => {
+        if (!entries[0].isIntersecting) return;
+        for (const other of links) other.classList.remove('is-active');
+        link.classList.add('is-active');
+      },
+      { rootMargin: '-45% 0px -45% 0px' }
+    ).observe(target);
+  }
 }
 
 function setupTextScramble(): void {
@@ -140,7 +190,7 @@ function setup3DTilt(): void {
 
       const glare = htmlCard.querySelector('.wc-glare') as HTMLElement;
       if (glare) {
-        glare.style.background = `radial-gradient(circle at ${(x + 1) * 50}% ${(y + 1) * 50}%, rgba(77,232,160,.12) 0%, transparent 60%)`;
+        glare.style.background = `radial-gradient(circle at ${(x + 1) * 50}% ${(y + 1) * 50}%, rgba(240, 180, 106,.12) 0%, transparent 60%)`;
       }
     });
 

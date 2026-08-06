@@ -1,6 +1,7 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from '@studio-freight/lenis';
+import { initRocket } from './rocket';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -57,7 +58,10 @@ function heroIn(): void {
 }
 
 export function setupAnimations(lenis: Lenis): void {
-  // Rocket scroll animation
+  const rocket = initRocket('scrolling-rocket');
+  const rocketDeg = document.getElementById('rs-deg');
+
+  // Rocket scroll animation — scroll position drives the model's rotation
   gsap.timeline({
     scrollTrigger: {
       trigger: '#rocket-scroll',
@@ -66,6 +70,15 @@ export function setupAnimations(lenis: Lenis): void {
       pin: true,
       scrub: 1.2,
       anticipatePin: 1,
+      onUpdate({ progress }) {
+        if (!rocket) return;
+        const spin = progress * Math.PI * 4;
+        rocket.setSpin(spin);
+        if (rocketDeg) {
+          const deg = ((spin * 180) / Math.PI) % 360;
+          rocketDeg.textContent = `${deg.toFixed(1).padStart(5, '0')}°`;
+        }
+      },
     },
   })
     .fromTo(

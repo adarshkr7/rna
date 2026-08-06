@@ -1,9 +1,5 @@
-import { initMouseTrail } from './cursor';
-import { initParticles } from './webgl';
 
 export function setupUI(): void {
-  initMouseTrail();
-  initParticles();
   setupTerminal();
   setupResponsiveFooterVideo();
 }

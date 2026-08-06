@@ -3,8 +3,7 @@ import './style.css';
 import Lenis from '@studio-freight/lenis';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { initCursor } from './cursor';
-import { initWebGL } from './webgl';
+import { initBlackHole } from './blackhole';
 import { setupAnimations, setupPreloader } from './animations';
 import { setupComponents } from './components';
 import { setupUI } from './ui';
@@ -39,8 +38,7 @@ window.addEventListener(
 );
 
 // Initialize all modules
-initCursor();
-initWebGL();
+initBlackHole();
 setupPreloader();
 setupAnimations(lenis);
 setupComponents();
