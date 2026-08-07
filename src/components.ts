@@ -1,4 +1,5 @@
 import { gsap } from 'gsap';
+import type Lenis from '@studio-freight/lenis';
 
 const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#!';
 
@@ -24,16 +25,16 @@ function scrambleText(el: HTMLElement): void {
   }, 40);
 }
 
-export function setupComponents(): void {
+export function setupComponents(lenis?: Lenis): void {
   setupTextScramble();
   setupAnimatedCounters();
   setupMagneticElements();
   setup3DTilt();
   setupSectionNav();
-  setupNav();
+  setupNav(lenis);
 }
 
-function setupNav(): void {
+function setupNav(lenis?: Lenis): void {
   const nav = document.getElementById('main-nav');
   const toggle = document.getElementById('nav-toggle');
   const menu = document.getElementById('nav-menu');
@@ -53,22 +54,44 @@ function setupNav(): void {
     toggle?.setAttribute('aria-label', 'Open menu');
   };
 
+  // Targets are data attributes rather than `href="#id"`, so navigating the
+  // page never writes a fragment into the address bar.
+  const goTo = (id: string): void => {
+    const target = document.getElementById(id);
+    if (!target) return;
+    if (lenis) lenis.scrollTo(target, { duration: 1.4 });
+    else target.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const explore = document.getElementById('explore-btn');
+  explore?.addEventListener('click', () => {
+    window.location.href = '/projects.html';
+  });
+
+  for (const el of document.querySelectorAll<HTMLElement>('[data-target]')) {
+    el.addEventListener('click', () => {
+      const id = el.dataset.target;
+      if (!id) return;
+      closeMenu();
+      goTo(id);
+    });
+  }
+
   if (toggle && menu) {
     toggle.addEventListener('click', () => {
       const open = document.body.classList.toggle('menu-open');
       toggle.setAttribute('aria-expanded', String(open));
       toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
     });
-    menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeMenu();
     });
   }
 
   // Highlight whichever section is currently in view.
-  const links = Array.from(nav.querySelectorAll<HTMLAnchorElement>('.nav-links a'));
+  const links = Array.from(nav.querySelectorAll<HTMLElement>('.nav-links .nav-link'));
   for (const link of links) {
-    const target = document.querySelector(link.getAttribute('href') || '');
+    const target = document.getElementById(link.dataset.target || '');
     if (!target) continue;
 
     new IntersectionObserver(

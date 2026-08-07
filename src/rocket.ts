@@ -2,8 +2,7 @@ const SVG_NS = 'http://www.w3.org/2000/svg';
 
 const CX = 150;
 const R = 44;
-const TILT = 0.24; // foreshortening of the horizontal plane
-const LEAN = 8;
+const TILT = 0.24; // foreshortening of the horizontal plane — not a lean
 
 const NOSE_END = 140;
 const BAY_END = 186;
@@ -52,6 +51,15 @@ function stations(): number[] {
 
 export interface RocketHandle {
   setSpin(radians: number): void;
+  /** Sections the scroll timeline flies in before the vehicle starts spinning. */
+  parts: {
+    nose: SVGGElement;
+    body: SVGGElement;
+    aft: SVGGElement;
+    fins: SVGGElement[];
+    surface: SVGGElement;
+    labels: SVGGElement[];
+  };
 }
 
 export function initRocket(mountId: string): RocketHandle | null {
@@ -78,27 +86,42 @@ export function initRocket(mountId: string): RocketHandle | null {
     </linearGradient>`;
   svg.appendChild(defs);
 
-  const root = node('g', { transform: `rotate(${LEAN} ${CX} 250)` });
+  const root = node('g');
   svg.appendChild(root);
 
   const finsBack = node('g', { class: 'rkt-fins' });
-  const hull = node('g');
   const finsFront = node('g', { class: 'rkt-fins' });
   const surface = node('g', { class: 'rkt-surface' });
-  root.append(finsBack, hull, surface, finsFront);
+
+  // The hull is split into sections rather than drawn as one silhouette, so the
+  // vehicle can fly together from separate pieces before it starts spinning.
+  const nose = node('g');
+  const body = node('g');
+  const aft = node('g');
+
+  root.append(finsBack, nose, body, aft, surface, finsFront);
 
   // ── Static hull silhouette ────────────────────────────────────────────────
   const ys = stations();
-  const right = ys.map((y) => `${CX + radiusAt(y)},${y}`);
-  const left = [...ys].reverse().map((y) => `${CX - radiusAt(y)},${y}`);
-  hull.appendChild(
-    node('polygon', { class: 'rkt-hull', points: [...right, ...left].join(' ') })
-  );
+
+  /** Silhouette polygon for one station range, so sections can fly separately. */
+  function hullSegment(from: number, to: number): SVGPolygonElement {
+    const seg = ys.filter((y) => y >= from && y <= to);
+    if (seg[0] !== from) seg.unshift(from);
+    if (seg[seg.length - 1] !== to) seg.push(to);
+    const right = seg.map((y) => `${CX + radiusAt(y)},${y}`);
+    const left = [...seg].reverse().map((y) => `${CX - radiusAt(y)},${y}`);
+    return node('polygon', { class: 'rkt-hull', points: [...right, ...left].join(' ') });
+  }
+
+  nose.appendChild(hullSegment(0, NOSE_END));
+  body.appendChild(hullSegment(NOSE_END, BODY_END));
+  aft.appendChild(hullSegment(BODY_END, BOATTAIL_END));
 
   // Boattail → nozzle bell
   const bellYs = [BOATTAIL_END, 440, 455, 468, NOZZLE_END];
   const bellR = [BOATTAIL_END, 440, 455, 468, NOZZLE_END].map(radiusAt);
-  hull.appendChild(
+  aft.appendChild(
     node('polygon', {
       class: 'rkt-bell',
       points: [
@@ -108,10 +131,10 @@ export function initRocket(mountId: string): RocketHandle | null {
     })
   );
   // Avionics bay + payload band
-  hull.appendChild(
+  body.appendChild(
     node('rect', { class: 'rkt-bay', x: CX - R, y: NOSE_END, width: R * 2, height: BAY_END - NOSE_END })
   );
-  hull.appendChild(
+  body.appendChild(
     node('rect', {
       class: 'rkt-band',
       x: CX - R - 2,
@@ -135,7 +158,8 @@ export function initRocket(mountId: string): RocketHandle | null {
   ];
   for (const [y, cls] of hoopStations) {
     const r = y === BAND_TOP || y === BAND_BOT ? R + 2 : radiusAt(y);
-    hull.appendChild(
+    const section = y <= NOSE_END ? nose : y >= BOATTAIL_END ? aft : body;
+    section.appendChild(
       node('ellipse', { class: `rkt-hoop ${cls}`, cx: CX, cy: y, rx: r, ry: r * TILT })
     );
   }
@@ -175,6 +199,36 @@ export function initRocket(mountId: string): RocketHandle | null {
     fin.dataset.az = String((Math.PI / 2) * i + Math.PI / 4);
     return fin;
   });
+
+  // ── Part callouts (shown while the vehicle assembles) ─────────────────────
+  // [station, label, side, radius the leader starts from]
+  const labelDefs: Array<[number, string, number, number]> = [
+    [70, 'Nose', 1, radiusAt(70)],
+    [163, 'Avionics', -1, R],
+    [300, 'Core', 1, R + 2],
+    [385, 'Fins', -1, 96],
+    [455, 'Nozzle', 1, radiusAt(455)],
+  ];
+  const labelGroup = node('g');
+  const labels = labelDefs.map(([y, text, side, startR]) => {
+    const g = node('g', { class: 'rkt-label' });
+    const from = CX + side * (startR + 9);
+    g.append(
+      node('circle', { class: 'rkt-label-dot', cx: from, cy: y, r: 1.8 }),
+      node('line', { class: 'rkt-label-line', x1: from, y1: y, x2: CX + side * 110, y2: y })
+    );
+    const caption = node('text', {
+      class: 'rkt-label-text',
+      x: CX + side * 116,
+      y: y + 3.5,
+      'text-anchor': side > 0 ? 'start' : 'end',
+    });
+    caption.textContent = text;
+    g.appendChild(caption);
+    labelGroup.appendChild(g);
+    return g;
+  });
+  root.appendChild(labelGroup);
 
   // ── Projection ────────────────────────────────────────────────────────────
   function render(spin: number): void {
@@ -234,7 +288,17 @@ export function initRocket(mountId: string): RocketHandle | null {
   }
 
   mount.appendChild(svg);
-  render(0.6);
+  render(0);
 
-  return { setSpin: render };
+  return {
+    setSpin: render,
+    parts: {
+      nose,
+      body,
+      aft,
+      fins: [finsBack, finsFront],
+      surface,
+      labels,
+    },
+  };
 }

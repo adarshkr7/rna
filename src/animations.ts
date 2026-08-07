@@ -2,6 +2,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from '@studio-freight/lenis';
 import { initRocket } from './rocket';
+import { initSpaceField } from './spacefield';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -58,21 +59,61 @@ function heroIn(): void {
 }
 
 export function setupAnimations(lenis: Lenis): void {
+  initSpaceField('rocket-field');
   const rocket = initRocket('scrolling-rocket');
   const rocketDeg = document.getElementById('rs-deg');
 
-  // Rocket scroll animation — scroll position drives the model's rotation
-  gsap.timeline({
+  // Rocket scroll animation. The pinned range runs in two phases: the vehicle
+  // flies together from separate sections while sitting on the planet, then
+  // launches — the rocket climbing and the planet falling by the same distance.
+  const ASSEMBLE_END = 0.45;
+  const LAUNCH_VH = 105;
+
+  // Park the horizon just under the nozzle so the vehicle stands on the planet.
+  // Measured rather than set as a percentage: the SVG is letterboxed inside its
+  // mount, and whether it fits by width or height flips with the viewport, so a
+  // fixed percentage seats correctly on one screen and floats on another.
+  function seatEarth(): void {
+    const bell = document.querySelector('.rkt-bell');
+    const earth = document.getElementById('rocket-earth');
+    const mount = document.getElementById('scrolling-rocket');
+    const section = document.getElementById('rocket-scroll');
+    if (!bell || !earth || !mount || !section) return;
+
+    const mountRect = mount.getBoundingClientRect();
+    // Offset of the nozzle inside its mount is fixed, so this stays correct
+    // even once the launch tween has translated the mount.
+    const nozzleInMount = bell.getBoundingClientRect().bottom - mountRect.top;
+    const restTop = section.clientHeight / 2 - mountRect.height / 2;
+    earth.style.top = `${(restTop + nozzleInMount - 14).toFixed(1)}px`;
+  }
+
+  // Centre both through GSAP rather than CSS. GSAP folds a CSS `translate`
+  // shorthand into its own transform and drops a component — that is what left
+  // the rocket sitting half its height below where the styles put it.
+  gsap.set('#scrolling-rocket', { xPercent: -50, yPercent: -50 });
+  gsap.set('#rocket-earth', { xPercent: -50 });
+
+  seatEarth();
+  let seatTimer = 0;
+  window.addEventListener('resize', () => {
+    window.clearTimeout(seatTimer);
+    seatTimer = window.setTimeout(seatEarth, 150);
+  });
+
+  const rocketTl = gsap.timeline({
     scrollTrigger: {
       trigger: '#rocket-scroll',
       start: 'top top',
-      end: '+=4000',
+      end: '+=5600',
       pin: true,
       scrub: 1.2,
       anticipatePin: 1,
       onUpdate({ progress }) {
         if (!rocket) return;
-        const spin = progress * Math.PI * 4;
+        // Held at zero while it builds, so the parts land on a still vehicle.
+        const t = Math.max(0, (progress - ASSEMBLE_END) / (1 - ASSEMBLE_END));
+        const spin = t * Math.PI * 4;
         rocket.setSpin(spin);
         if (rocketDeg) {
           const deg = ((spin * 180) / Math.PI) % 360;
@@ -80,20 +121,62 @@ export function setupAnimations(lenis: Lenis): void {
         }
       },
     },
-  })
+  });
+
+  // Timeline runs on a 0–10 scale; assembly occupies the first 4.5 units to
+  // match ASSEMBLE_END above.
+  rocketTl.fromTo('#scrolling-rocket', { opacity: 0 }, { opacity: 1, duration: 0.3, ease: 'none' }, 0);
+
+  if (rocket) {
+    const { nose, body, aft, fins, surface, labels } = rocket.parts;
+    const land = 'power2.out';
+
+    rocketTl
+      .fromTo(body, { x: -320, opacity: 0 }, { x: 0, opacity: 1, duration: 1.5, ease: land }, 0.15)
+      .fromTo(nose, { y: -360, opacity: 0 }, { y: 0, opacity: 1, duration: 1.5, ease: land }, 0.7)
+      .fromTo(aft, { y: 340, opacity: 0 }, { y: 0, opacity: 1, duration: 1.5, ease: land }, 1.25)
+      .fromTo(fins, { x: 320, opacity: 0 }, { x: 0, opacity: 1, duration: 1.4, ease: land }, 1.8)
+      .fromTo(surface, { opacity: 0 }, { opacity: 1, duration: 0.9, ease: 'none' }, 2.7)
+      // Callouts name each section as it arrives, then clear before launch.
+      .fromTo(
+        labels,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.5, stagger: 0.45, ease: 'none' },
+        0.9
+      )
+      .to(labels, { opacity: 0, duration: 0.45, ease: 'none' }, 4.0);
+  }
+
+  // Phase two — launch. Both targets ride one tween with a function-based value
+  // so they share a single timing source: separate tweens drifted out of step
+  // and the planet fell slower than the rocket climbed.
+  rocketTl
     .fromTo(
-      '#scrolling-rocket',
-      { y: '110vh', scale: 0.4, opacity: 0, filter: 'blur(8px)' },
-      { y: '0%', scale: 1, opacity: 1, filter: 'blur(0px)', duration: 1, ease: 'power3.out' }
+      ['#scrolling-rocket', '#rocket-earth'],
+      // Explicit zero start: left to infer it, GSAP recorded a non-zero offset
+      // for the planet and it fell at roughly half the rocket's rate.
+      { y: 0 },
+      {
+        y: (i: number) => (i === 0 ? `-${LAUNCH_VH}vh` : `${LAUNCH_VH}vh`),
+        duration: 4.5,
+        ease: 'none',
+      },
+      4.5
     )
-    .to('#scrolling-rocket', { scale: 1.5, duration: 2, ease: 'none' })
-    .to('#scrolling-rocket', {
-      y: '-140vh',
-      opacity: 0.5,
-      filter: 'blur(4px)',
-      duration: 1.2,
-      ease: 'power2.in',
-    });
+    // Debris falls at a fraction of the planet's rate — parallax reads as depth.
+    .fromTo(
+      '#rocket-field',
+      { y: 0 },
+      { y: `${LAUNCH_VH * 0.28}vh`, duration: 4.5, ease: 'none' },
+      4.5
+    )
+    .to(
+      '#scrolling-rocket',
+      { opacity: 0.45, filter: 'blur(3px)', duration: 1.0, ease: 'power2.in' },
+      9.0
+    );
+
+  setupTimeline();
 
   // Reveal up animations
   gsap.utils.toArray('.reveal-up').forEach((el: any) => {
@@ -220,3 +303,73 @@ function setupProgressTimeline(): void {
 }
 
 
+
+/**
+ * Timeline: the spine fills as the log scrolls past, and each entry lights up
+ * its node once it reaches the reading line.
+ */
+function setupTimeline(): void {
+  const track = document.querySelector<HTMLElement>('.tl');
+  const spine = document.querySelector<HTMLElement>('.tl-spine');
+  const fill = document.querySelector('.tl-spine-fill');
+  const rows = Array.from(document.querySelectorAll<HTMLElement>('.tl-row'));
+  if (!track || !spine || !fill || rows.length === 0) return;
+
+  const nodes = rows.map((r) => r.querySelector<HTMLElement>('.tl-node')).filter(Boolean) as HTMLElement[];
+  const lastRow = rows[rows.length - 1];
+
+  /** Run the rail between the first and last node rather than the full block,
+   *  so it terminates on the final milestone instead of trailing past it. */
+  function fitSpine(): void {
+    if (nodes.length < 2) return;
+    const top = track!.getBoundingClientRect().top;
+    const centre = (n: HTMLElement): number => {
+      const r = n.getBoundingClientRect();
+      return r.top + r.height / 2 - top;
+    };
+    const from = centre(nodes[0]);
+    spine!.style.top = `${from.toFixed(1)}px`;
+    spine!.style.bottom = 'auto';
+    spine!.style.height = `${(centre(nodes[nodes.length - 1]) - from).toFixed(1)}px`;
+  }
+
+  fitSpine();
+
+  gsap.fromTo(
+    fill,
+    { scaleY: 0 },
+    {
+      scaleY: 1,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: track,
+        start: 'top 72%',
+        // Completes as the final entry reaches the same reading line the first
+        // one started at, so the fill lands exactly on the last node.
+        endTrigger: lastRow,
+        end: 'top 72%',
+        scrub: 0.6,
+      },
+    }
+  );
+
+  let fitTimer = 0;
+  window.addEventListener('resize', () => {
+    window.clearTimeout(fitTimer);
+    fitTimer = window.setTimeout(() => {
+      fitSpine();
+      ScrollTrigger.refresh();
+    }, 150);
+  });
+
+  for (const row of rows) {
+    new IntersectionObserver(
+      (entries, observer) => {
+        if (!entries[0].isIntersecting) return;
+        row.classList.add('is-live');
+        observer.disconnect();
+      },
+      { rootMargin: '0px 0px -28% 0px' }
+    ).observe(row);
+  }
+}

@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rocketry & Aviation Club | IIT Patna</title>
-    <link rel="icon" type="image/svg+xml" href="/public/src/logo.svg">
+    <link rel="icon" type="image/svg+xml" href="/images/logo.svg">
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&f[]=clash-display@600,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/style.css">
 </head>
 <body>
     <div id="app">
@@ -38,15 +39,15 @@
 
         <!-- Navigation -->
         <nav id="main-nav">
-            <a class="nav-logo-wrap" href="#hero" aria-label="Rocketry &amp; Aviation Club — home">
-                <img src="/public/src/logo.svg" alt="RNA" class="h-12 w-auto">
-            </a>
+            <button class="nav-logo-wrap" type="button" data-target="hero" aria-label="Rocketry &amp; Aviation Club — back to top">
+                <img src="/images/logo.svg" alt="RNA" class="h-12 w-auto">
+            </button>
             <div class="nav-links hidden md:flex">
-                <a href="#manifesto">About</a>
-                <a href="#team">Team</a>
-                <a href="#works">Works</a>
-                <a href="#progress">Progress</a>
-                <a href="#contact">Contact</a>
+                <button type="button" class="nav-link" data-target="manifesto">About</button>
+                <button type="button" class="nav-link" data-target="team">Team</button>
+                <button type="button" class="nav-link" data-target="works">Works</button>
+                <button type="button" class="nav-link" data-target="progress">Progress</button>
+                <button type="button" class="nav-link" data-target="contact">Contact</button>
             </div>
             <div class="nav-dot hidden md:block" id="nav-dot-mag"></div>
             <button id="nav-toggle" class="nav-toggle md:hidden" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu">
@@ -56,11 +57,11 @@
 
         <!-- Mobile Menu -->
         <div id="nav-menu" class="nav-menu">
-            <a href="#manifesto"><span class="nav-menu-num">01</span>About</a>
-            <a href="#team"><span class="nav-menu-num">02</span>Team</a>
-            <a href="#works"><span class="nav-menu-num">03</span>Works</a>
-            <a href="#progress"><span class="nav-menu-num">04</span>Progress</a>
-            <a href="#contact"><span class="nav-menu-num">05</span>Contact</a>
+            <button type="button" class="nav-link" data-target="manifesto"><span class="nav-menu-num">01</span>About</button>
+            <button type="button" class="nav-link" data-target="team"><span class="nav-menu-num">02</span>Team</button>
+            <button type="button" class="nav-link" data-target="works"><span class="nav-menu-num">03</span>Works</button>
+            <button type="button" class="nav-link" data-target="progress"><span class="nav-menu-num">04</span>Progress</button>
+            <button type="button" class="nav-link" data-target="contact"><span class="nav-menu-num">05</span>Contact</button>
         </div>
 
         <!-- Hero Section -->
@@ -79,10 +80,6 @@
                         <p class="hero-desc">Pushing boundaries<br> of aerodynamics &amp; propulsion.<br>Student-led. Mission-driven.</p>
                     </div>
                 </div>
-            </div>
-            <div class="hero-readout" aria-hidden="true">
-                <span class="hud-k">Gargantua · time dilation</span>
-                <span class="hud-v" id="stage-dilation">000.00 h</span>
             </div>
         </section>
 
@@ -153,6 +150,14 @@
         <!-- Rocket Scroll Section -->
         <section id="rocket-scroll">
             <div class="grid-bg" aria-hidden="true"></div>
+            <div id="rocket-field" aria-hidden="true"></div>
+            <div id="rocket-earth" aria-hidden="true">
+                <div class="earth-globe">
+                    <div class="earth-surface"></div>
+                    <div class="earth-shade"></div>
+                </div>
+                <div class="earth-limb"></div>
+            </div>
             <div id="scrolling-rocket"></div>
             <div class="rs-hud">
                 <span class="rs-k">Taara · 01</span>
@@ -190,7 +195,7 @@
         <section id="we" data-s="4">
             <div class="we-inner">
                 <div class="we-img-wrap">
-                    <img src="/public/src/team-desc.jpg" loading="lazy" alt="Team RNA">
+                    <img src="/images/1000149862.jpg" loading="lazy" alt="Team RNA with the test stand before a night firing">
                     <span class="we-img-tag">Team RNA · IIT Patna</span>
                 </div>
                 <div>
@@ -270,14 +275,14 @@
                 <div class="works-meta hidden md:block">Eight domains<br>of mastery<br><span style="color:var(--accent-dim)">→ hover to reveal</span></div>
             </div>
             <div class="works-grid">
-                <div class="wc wc-1"><img src="/public/src/noz1.png" loading="lazy" alt="Metal AM"><div class="wc-glare"></div><div class="wc-info"><span class="wc-num">001</span><span class="wc-tag">Metal Additive Manufacturing</span></div></div>
-                <div class="wc wc-2"><img src="/public/src/pcb1.png" loading="lazy" alt="PCB"><div class="wc-glare"></div><div class="wc-info"><span class="wc-num">002</span><span class="wc-tag">PCB Designing</span></div></div>
-                <div class="wc wc-3"><img src="/public/src/prop1.png" loading="lazy" alt="Propulsion"><div class="wc-glare"></div><div class="wc-info"><span class="wc-num">003</span><span class="wc-tag">Propulsion System</span></div></div>
-                <div class="wc wc-4"><img src="/public/src/prop2.png" loading="lazy" alt="CAD"><div class="wc-glare"></div><div class="wc-info"><span class="wc-num">004</span><span class="wc-tag">CAD</span></div></div>
-                <div class="wc wc-5"><img src="/public/src/schematic.jpeg" loading="lazy" alt="Schematic"><div class="wc-glare"></div><div class="wc-info"><span class="wc-num">005</span><span class="wc-tag">PCB Schematic</span></div></div>
-                <div class="wc wc-6"><img src="/public/src/srcn/IMG_3232.JPG.jpeg" loading="lazy" alt="Launch"><div class="wc-glare"></div><div class="wc-info"><span class="wc-num">006</span><span class="wc-tag">Launch</span></div></div>
-                <div class="wc wc-7"><img src="/public/src/srcn/prop.jpeg" loading="lazy" alt="Static Fire"><div class="wc-glare"></div><div class="wc-info"><span class="wc-num">007</span><span class="wc-tag">Static Fire</span></div></div>
-                <div class="wc wc-8"><img src="/public/src/clg.jpeg" loading="lazy" alt="Research"><div class="wc-glare"></div><div class="wc-info"><span class="wc-num">008</span><span class="wc-tag">Research</span></div></div>
+                <div class="wc wc-1"><img src="/images/1000149863.jpg" loading="lazy" alt="Prototype flight computer with barometer and IMU"><div class="wc-glare"></div><div class="wc-info"><span class="wc-num">001</span><span class="wc-tag">Avionics &amp; Flight Computer</span></div></div>
+                <div class="wc wc-2"><img src="/images/1000149866.jpg" loading="lazy" alt="Instrumented static fire test stand"><div class="wc-glare"></div><div class="wc-info"><span class="wc-num">002</span><span class="wc-tag">Static Fire Testing</span></div></div>
+                <div class="wc wc-3"><img src="/images/1000149865.jpg" loading="lazy" alt="Rail-mounted thrust stand"><div class="wc-glare"></div><div class="wc-info"><span class="wc-num">003</span><span class="wc-tag">Thrust Stand</span></div></div>
+                <div class="wc wc-4"><img src="/images/1000149883.jpg" loading="lazy" alt="Factor-of-safety study on a nozzle"><div class="wc-glare"></div><div class="wc-info"><span class="wc-num">004</span><span class="wc-tag">CAD &amp; Simulation</span></div></div>
+                <div class="wc wc-5"><img src="/images/1000149872.jpg" loading="lazy" alt="Fixed-wing airframe with servos and ESC"><div class="wc-glare"></div><div class="wc-info"><span class="wc-num">005</span><span class="wc-tag">Airframe Build</span></div></div>
+                <div class="wc wc-6"><img src="/images/1000149867.jpg" loading="lazy" alt="Boeing aeromodelling workshop"><div class="wc-glare"></div><div class="wc-info"><span class="wc-num">006</span><span class="wc-tag">Aeromodelling</span></div></div>
+                <div class="wc wc-7"><img src="/images/1000149871.jpg" loading="lazy" alt="Transmitter, LiPo, receiver and propeller"><div class="wc-glare"></div><div class="wc-info"><span class="wc-num">007</span><span class="wc-tag">Flight Control Systems</span></div></div>
+                <div class="wc wc-8"><img src="/images/1000149868.jpg" loading="lazy" alt="Reviewing telemetry in the field at dawn"><div class="wc-glare"></div><div class="wc-info"><span class="wc-num">008</span><span class="wc-tag">Field Testing</span></div></div>
             </div>
             <div style="display:flex;justify-content:center">
                 <button class="mag-btn" id="explore-btn"><span>Explore All Projects</span></button>
@@ -287,73 +292,63 @@
         <!-- Progress Timeline Section -->
         <section id="progress" data-s="7">
             <div class="prog-container">
-                <div class="prog-hdr"><span class="prog-eyebrow">/ 06 — Timeline</span><h2 class="prog-title">Progress</h2></div>
-                <div class="tl-vertical">
-                    <!-- Timeline Item -->
-                    <div class="tl-item">
-                        <div class="tl-marker">
-                            <div class="tl-dot"></div>
-                            <div class="tl-connector"></div>
-                        </div>
-                        <div class="tl-content">
-                            <div class="tl-year">2018</div>
-                            <h3 class="tl-heading">Inception</h3>
-                            <p class="tl-date">August 15, 2018</p>
-                            <p class="tl-body">The Rocketry & Aviation Club was established to advance student-led aerospace research and innovation at IIT Patna.</p>
-                        </div>
+                <div class="prog-hdr">
+                    <span class="eyebrow">/ 06 — Timeline</span>
+                    <h2 class="prog-title">Progress</h2>
+                    <p class="prog-sub">A record of the principal engineering milestones achieved by the club since its establishment.</p>
+                </div>
+                <div class="tl">
+                    <div class="tl-spine" aria-hidden="true"><span class="tl-spine-fill"></span></div>
+                <article class="tl-row">
+                    <div class="tl-rail" aria-hidden="true"><span class="tl-node"></span></div>
+                    <div class="tl-year">2018</div>
+                    <div class="tl-detail">
+                        <span class="tl-idx">01</span>
+                        <h3 class="tl-title">Inception</h3>
+                        <time class="tl-date">15 August 2018</time>
+                        <p class="tl-text">The Rocketry &amp; Aviation Club was established to advance student-led aerospace research and innovation at IIT Patna.</p>
                     </div>
-                    <!-- Timeline Item -->
-                    <div class="tl-item">
-                        <div class="tl-marker">
-                            <div class="tl-dot"></div>
-                            <div class="tl-connector"></div>
-                        </div>
-                        <div class="tl-content">
-                            <div class="tl-year">2021</div>
-                            <h3 class="tl-heading">Avionics</h3>
-                            <p class="tl-date">September 05, 2021</p>
-                            <p class="tl-body">Designed and developed custom flight computers and telemetry systems to enable reliable real-time data acquisition during flight operations.</p>
-                        </div>
+                </article>
+                <article class="tl-row">
+                    <div class="tl-rail" aria-hidden="true"><span class="tl-node"></span></div>
+                    <div class="tl-year">2021</div>
+                    <div class="tl-detail">
+                        <span class="tl-idx">02</span>
+                        <h3 class="tl-title">Avionics</h3>
+                        <time class="tl-date">05 September 2021</time>
+                        <p class="tl-text">Developed in-house flight computers and telemetry systems to provide reliable real-time data acquisition throughout flight.</p>
                     </div>
-                    <!-- Timeline Item -->
-                    <div class="tl-item">
-                        <div class="tl-marker">
-                            <div class="tl-dot"></div>
-                            <div class="tl-connector"></div>
-                        </div>
-                        <div class="tl-content">
-                            <div class="tl-year">2022</div>
-                            <h3 class="tl-heading">Propulsion</h3>
-                            <p class="tl-date">April 18, 2022</p>
-                            <p class="tl-body">Successfully conducted the first static firing of a solid rocket motor, meeting predefined thrust and burn duration parameters.</p>
-                        </div>
+                </article>
+                <article class="tl-row">
+                    <div class="tl-rail" aria-hidden="true"><span class="tl-node"></span></div>
+                    <div class="tl-year">2022</div>
+                    <div class="tl-detail">
+                        <span class="tl-idx">03</span>
+                        <h3 class="tl-title">Propulsion</h3>
+                        <time class="tl-date">18 April 2022</time>
+                        <p class="tl-text">Conducted the first static firing of a solid rocket motor, meeting the predefined thrust and burn-duration parameters.</p>
                     </div>
-                    <!-- Timeline Item -->
-                    <div class="tl-item">
-                        <div class="tl-marker">
-                            <div class="tl-dot"></div>
-                            <div class="tl-connector"></div>
-                        </div>
-                        <div class="tl-content">
-                            <div class="tl-year">2025</div>
-                            <h3 class="tl-heading">Launch</h3>
-                            <p class="tl-date">April 18, 2025</p>
-                            <p class="tl-body">Introduced “Taara,” the club’s first flight vehicle, representing a significant milestone in integrated design, testing, and launch capabilities.</p>
-
-                        </div>
+                </article>
+                <article class="tl-row">
+                    <div class="tl-rail" aria-hidden="true"><span class="tl-node"></span></div>
+                    <div class="tl-year">2025</div>
+                    <div class="tl-detail">
+                        <span class="tl-idx">04</span>
+                        <h3 class="tl-title">Launch</h3>
+                        <time class="tl-date">18 April 2025</time>
+                        <p class="tl-text">Completed Taara, the club&rsquo;s first flight vehicle, integrating design, testing and launch operations into a single programme.</p>
                     </div>
-                    <!-- Timeline Item -->
-                    <div class="tl-item">
-                        <div class="tl-marker">
-                            <div class="tl-dot"></div>
-                        </div>
-                        <div class="tl-content">
-                            <div class="tl-year">2026</div>
-                            <h3 class="tl-heading">Innovation</h3>
-                            <p class="tl-date">January 16, 2026</p>
-                            <p class="tl-body">Completed the fourth static fire test using in-house KNDX propellant and advanced thermal insulation, achieving an I-class motor performance of 480 Ns total impulse.</p>
-                        </div>
+                </article>
+                <article class="tl-row is-terminal">
+                    <div class="tl-rail" aria-hidden="true"><span class="tl-node"></span></div>
+                    <div class="tl-year">2026</div>
+                    <div class="tl-detail">
+                        <span class="tl-idx">05</span>
+                        <h3 class="tl-title">Innovation</h3>
+                        <time class="tl-date">16 January 2026</time>
+                        <p class="tl-text">Conducted a fourth static fire test using in-house KNDX propellant and improved thermal insulation, achieving I-class motor performance of 480&nbsp;Ns total impulse.</p>
                     </div>
+                </article>
                 </div>
             </div>
         </section>
@@ -361,11 +356,11 @@
         <!-- Footer -->
         <footer id="contact" data-s="8">
             <video id="footer-video" autoplay muted loop playsinline>
-                <source src="/public/src/footer-rocket.mp4" type="video/mp4">
+                <source src="/images/footer-rocket.mp4" type="video/mp4">
             </video>
             <div class="footer-top">
                 <div>
-                    <img src="/public/src/iitplogo.png" alt="IIT Patna" class="h-12 w-auto mb-5">
+                    <img src="/images/iitplogo.png" alt="IIT Patna" class="h-12 w-auto mb-5">
                     <span class="footer-loc-lbl">Location</span>
                     <div class="footer-loc">IIT Patna,<br>Bihta, Bihar</div>
                 </div>

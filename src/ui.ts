@@ -10,7 +10,7 @@ function setupResponsiveFooterVideo(): void {
 
   function updateVideoSource(): void {
     const isMobile = window.innerWidth <= 768;
-    const src = isMobile ? '/public/src/footer-rocket-sm.mp4' : '/public/src/footer-rocket.mp4';
+    const src = isMobile ? '/images/footer-rocket-sm.mp4' : '/images/footer-rocket.mp4';
     const currentSrc = video.querySelector('source')?.src;
     
     if (currentSrc !== src) {

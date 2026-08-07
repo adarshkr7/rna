@@ -190,15 +190,4 @@ export function initBlackHole(): void {
     </g>`;
 
   mount.appendChild(svg);
-
-  const readout = document.getElementById('stage-dilation');
-  if (!readout) return;
-
-  const start = performance.now();
-  const tick = (): void => {
-    const hours = ((performance.now() - start) / 1000) * 0.61;
-    readout.textContent = `${hours.toFixed(2).padStart(6, '0')} h`;
-    requestAnimationFrame(tick);
-  };
-  tick();
 }

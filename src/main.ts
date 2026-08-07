@@ -41,7 +41,7 @@ window.addEventListener(
 initBlackHole();
 setupPreloader();
 setupAnimations(lenis);
-setupComponents();
+setupComponents(lenis);
 setupUI();
 
 export { lenis, gsap };
