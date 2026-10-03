@@ -40,7 +40,7 @@ window.addEventListener(
 // Initialize all modules
 initBlackHole();
 setupPreloader();
-setupAnimations(lenis);
+setupAnimations();
 setupComponents(lenis);
 setupUI();
 

@@ -4,8 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rocketry & Aviation Club | IIT Patna</title>
+    <meta name="description" content="The Rocketry and Aviation Club of IIT Patna: a student-led team building solid rocket motors, flight computers, airframes and test infrastructure in-house.">
+    <meta name="theme-color" content="#06080a">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Rocketry &amp; Aviation Club, IIT Patna">
+    <meta property="og:title" content="Rocketry &amp; Aviation Club | IIT Patna">
+    <meta property="og:description" content="A student-led team building solid rocket motors, flight computers, airframes and test infrastructure in-house.">
     <link rel="icon" type="image/svg+xml" href="/images/logo.svg">
-    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&f[]=clash-display@600,700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+    <!-- One family per request: Fontshare drops every family after the first. -->
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/src/style.css">
 </head>
 <body>
@@ -355,9 +365,8 @@
 
         <!-- Footer -->
         <footer id="contact" data-s="8">
-            <video id="footer-video" autoplay muted loop playsinline>
-                <source src="/images/footer-rocket.mp4" type="video/mp4">
-            </video>
+            <!-- Source is chosen and loaded by ui.ts once the footer is near. -->
+            <video id="footer-video" muted loop playsinline preload="none" aria-hidden="true"></video>
             <div class="footer-top">
                 <div>
                     <img src="/images/iitplogo.png" alt="IIT Patna" class="h-12 w-auto mb-5">
@@ -367,8 +376,8 @@
                 <div>
                     <span class="footer-soc-lbl">Socials</span>
                     <ul class="footer-socs">
-                        <li><a href="https://www.instagram.com/rna.iitp/">Instagram</a></li>
-                        <li><a href="https://www.linkedin.com/company/rocketry-and-aviation-club-iit-patna/">LinkedIn</a></li>
+                        <li><a href="https://www.instagram.com/rna.iitp/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+                        <li><a href="https://www.linkedin.com/company/rocketry-and-aviation-club-iit-patna/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
                     </ul>
                 </div>
             </div>

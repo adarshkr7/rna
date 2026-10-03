@@ -1,6 +1,5 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Lenis from '@studio-freight/lenis';
 import { initRocket } from './rocket';
 import { initSpaceField } from './spacefield';
 
@@ -58,7 +57,7 @@ function heroIn(): void {
   }, 2200);
 }
 
-export function setupAnimations(lenis: Lenis): void {
+export function setupAnimations(): void {
   initSpaceField('rocket-field');
   const rocket = initRocket('scrolling-rocket');
   const rocketDeg = document.getElementById('rs-deg');

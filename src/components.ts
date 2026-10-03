@@ -30,7 +30,7 @@ export function setupComponents(lenis?: Lenis): void {
   setupAnimatedCounters();
   setupMagneticElements();
   setup3DTilt();
-  setupSectionNav();
+  setupSectionNav(lenis);
   setupNav(lenis);
 }
 
@@ -52,6 +52,7 @@ function setupNav(lenis?: Lenis): void {
     document.body.classList.remove('menu-open');
     toggle?.setAttribute('aria-expanded', 'false');
     toggle?.setAttribute('aria-label', 'Open menu');
+    lenis?.start();
   };
 
   // Targets are data attributes rather than `href="#id"`, so navigating the
@@ -82,6 +83,10 @@ function setupNav(lenis?: Lenis): void {
       const open = document.body.classList.toggle('menu-open');
       toggle.setAttribute('aria-expanded', String(open));
       toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      // Keep the page still behind the overlay; `lenis-stopped` also locks
+      // native touch scrolling via the stylesheet.
+      if (open) lenis?.stop();
+      else lenis?.start();
     });
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeMenu();
@@ -126,6 +131,13 @@ function setupTextScramble(): void {
   });
 }
 
+/** English ordinal suffix, so a count passing 1–3 doesn't read "1th". */
+function ordinal(n: number): string {
+  const mod100 = n % 100;
+  if (mod100 >= 11 && mod100 <= 13) return 'th';
+  return ['th', 'st', 'nd', 'rd'][n % 10] ?? 'th';
+}
+
 function setupAnimatedCounters(): void {
   document.querySelectorAll('.counter').forEach((el) => {
     const htmlEl = el as HTMLElement;
@@ -143,7 +155,8 @@ function setupAnimatedCounters(): void {
             if (!start) start = timestamp;
             const progress = Math.min((timestamp - start) / 1800, 1);
             const easeProgress = 1 - Math.pow(1 - progress, 3);
-            htmlEl.textContent = Math.round(easeProgress * target) + suffix;
+            const n = Math.round(easeProgress * target);
+            htmlEl.textContent = n + (suffix === 'th' ? ordinal(n) : suffix);
 
             if (progress < 1) {
               requestAnimationFrame(countUp);
@@ -228,7 +241,7 @@ function setup3DTilt(): void {
   });
 }
 
-function setupSectionNav(): void {
+function setupSectionNav(lenis?: Lenis): void {
   const snavDots = document.querySelectorAll('.sd');
 
   snavDots.forEach((dot) => {
@@ -236,13 +249,10 @@ function setupSectionNav(): void {
     const dataTarget = htmlDot.dataset.t;
 
     htmlDot.addEventListener('click', () => {
-      const targetEl = document.querySelector(dataTarget || '');
-      if (targetEl) {
-        const { lenis } = require('./main');
-        if (lenis) {
-          lenis.scrollTo(targetEl, { duration: 1.5 });
-        }
-      }
+      const targetEl = document.querySelector<HTMLElement>(dataTarget || '');
+      if (!targetEl) return;
+      if (lenis) lenis.scrollTo(targetEl, { duration: 1.5 });
+      else targetEl.scrollIntoView({ behavior: 'smooth' });
     });
   });
 

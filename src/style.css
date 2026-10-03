@@ -399,6 +399,12 @@ body.menu-open .nav-menu {
   pointer-events: auto;
 }
 
+/* Lenis adds this while stopped (menu open); it only halts wheel smoothing,
+   so native touch scrolling has to be locked here. */
+html.lenis-stopped {
+  overflow: hidden;
+}
+
 /* The bar itself must stay transparent over the overlay, or it paints a strip. */
 body.menu-open #main-nav {
   background: none;
@@ -2513,6 +2519,14 @@ footer::before {
 @media (max-width: 1024px) {
   .pj-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  /* The home page hides its section links on mobile; here the only link is
+     the way back, so it has to survive that rule. */
+  .pj-page .nav-links {
+    display: flex !important;
   }
 }
 
