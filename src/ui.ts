@@ -5,28 +5,38 @@ export function setupUI(): void {
 }
 
 function setupResponsiveFooterVideo(): void {
-  const video = document.getElementById('footer-video') as HTMLVideoElement;
+  const video = document.getElementById('footer-video') as HTMLVideoElement | null;
   if (!video) return;
 
-  function updateVideoSource(): void {
-    const isMobile = window.innerWidth <= 768;
-    const src = isMobile ? '/images/footer-rocket-sm.mp4' : '/images/footer-rocket.mp4';
-    const currentSrc = video.querySelector('source')?.src;
-    
-    if (currentSrc !== src) {
-      const source = video.querySelector('source') as HTMLSourceElement;
-      if (source) {
-        source.src = src;
-        video.load();
-      }
-    }
+  // A media query rather than a resize listener: mobile browsers fire resize
+  // whenever the address bar shows or hides, and every reload restarts the clip.
+  const mobile = window.matchMedia('(max-width: 768px)');
+  let near = false;
+
+  function load(): void {
+    const src = mobile.matches ? '/images/footer-rocket-sm.mp4' : '/images/footer-rocket.mp4';
+    // Compare the attribute — `.src` resolves to an absolute URL and never matches.
+    if (!video || video.getAttribute('src') === src) return;
+    video.src = src;
+    video.play().catch(() => {
+      // Autoplay refused (e.g. data saver); the footer reads fine without it.
+    });
   }
 
-  // Initial setup
-  updateVideoSource();
-  
-  // Listen for window resize
-  window.addEventListener('resize', updateVideoSource);
+  // Several megabytes of video — don't compete with the hero for bandwidth.
+  new IntersectionObserver(
+    (entries, observer) => {
+      if (!entries[0].isIntersecting) return;
+      near = true;
+      observer.disconnect();
+      load();
+    },
+    { rootMargin: '0px 0px 100% 0px' }
+  ).observe(video);
+
+  mobile.addEventListener('change', () => {
+    if (near) load();
+  });
 }
 
 function setupTerminal(): void {

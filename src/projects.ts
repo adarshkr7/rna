@@ -13,7 +13,9 @@ requestAnimationFrame(raf);
 // Solid bar once the page is scrolled, matching the home page.
 const nav = document.getElementById('main-nav');
 if (nav) {
-  const onScroll = (): void => nav.classList.toggle('scrolled', window.scrollY > 60);
+  const onScroll = (): void => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  };
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 }

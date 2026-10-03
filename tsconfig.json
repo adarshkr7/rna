@@ -17,5 +17,7 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src"]
+  "include": ["src"],
+  // An archived HTML page kept for reference, not a module — nothing imports it.
+  "exclude": ["src/webgl-backup.ts"]
 }
