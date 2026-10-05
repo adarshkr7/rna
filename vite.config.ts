@@ -15,6 +15,7 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
         projects: resolve(__dirname, 'projects.html'),
         team: resolve(__dirname, 'team.html'),
+        gallery: resolve(__dirname, 'gallery.html'),
       },
     },
     target: 'ES2020',

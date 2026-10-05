@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | Rocketry &amp; Aviation Club, IIT Patna</title>
+    <meta name="description" content="Photos from the Rocketry and Aviation Club team at IIT Patna.">
+    <meta name="theme-color" content="#06080a">
+    <link rel="icon" type="image/svg+xml" href="/images/logo.svg">
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&amp;display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/style.css">
+</head>
+<body class="pj-page gallery-page">
+    <div id="app">
+        <div class="grain" aria-hidden="true"></div>
+
+        <nav id="main-nav">
+            <a class="nav-logo-wrap" href="/" aria-label="Rocketry and Aviation Club home">
+                <img src="/images/logo.svg" alt="RNA" class="h-12 w-auto">
+            </a>
+            <div class="nav-links">
+                <a class="nav-link" href="/team.html">Team</a>
+                <a class="nav-link" href="/">Back to site</a>
+            </div>
+        </nav>
+
+        <header class="gallery-header">
+            <div>
+                <span class="eyebrow">/ 05 — Field Archive</span>
+                <h1 class="gallery-title">Gallery</h1>
+            </div>
+            <p class="gallery-count"><span id="gallery-count">20</span> frames<br>RNA Team · IIT Patna</p>
+        </header>
+
+        <main class="gallery-main">
+            <div class="gallery-grid" id="gallery-grid" aria-label="RNA team photos"></div>
+        </main>
+
+        <dialog class="gallery-lightbox" id="gallery-lightbox" aria-label="Expanded gallery photo">
+            <button class="gallery-lightbox-close" type="button" aria-label="Close photo">&times;</button>
+            <img src="" alt="">
+        </dialog>
+
+        <footer class="pj-foot">
+            <a class="pj-back" href="/team.html">&larr;&nbsp;&nbsp;Meet the team</a>
+            <span class="footer-copy">&copy; 2026 Rocketry &amp; Aviation Club, IIT Patna.</span>
+        </footer>
+    </div>
+
+    <script type="module" src="/src/gallery.ts"></script>
+</body>
+</html>
