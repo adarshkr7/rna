@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Crew | Rocketry &amp; Aviation Club, IIT Patna</title>
+    <meta name="description" content="Meet the student engineers, developers, and researchers behind the Rocketry and Aviation Club at IIT Patna.">
+    <meta name="theme-color" content="#06080a">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Rocketry &amp; Aviation Club, IIT Patna">
+    <meta property="og:title" content="The Crew | Rocketry &amp; Aviation Club, IIT Patna">
+    <meta property="og:description" content="Meet the student team building solid rocket motors, flight computers, airframes, and web infrastructure in-house.">
+    
+    <link rel="icon" type="image/svg+xml" href="/images/logo.svg">
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+    
+    <!-- Typography tokens matching main site -->
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&amp;display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/style.css">
+</head>
+<body class="pj-page">
+    <div id="app">
+        <!-- Grain Overlay -->
+        <div class="grain" aria-hidden="true"></div>
+
+        <!-- Navigation Bar -->
+        <nav id="main-nav">
+            <a class="nav-logo-wrap" href="/" aria-label="Rocketry &amp; Aviation Club — Home">
+                <img src="/images/logo.svg" alt="RNA" class="h-12 w-auto">
+            </a>
+            <div class="nav-links">
+                <a class="nav-link" href="/gallery.html">Gallery</a>
+                <a class="nav-link" href="/">&larr;&nbsp;&nbsp;Back to site</a>
+            </div>
+        </nav>
+
+        <!-- Header Hero Section -->
+        <header class="pj-hero">
+            <span class="eyebrow">/ 04 — Team Release</span>
+            <h1 class="pj-title">The<br>Crew</h1>
+            <p class="pj-intro">The students engineering solid rocket motors, custom flight computers, airframe structures, and web platforms in-house at IIT Patna.</p>
+            <ul class="pj-stats">
+                <li><span class="pj-stat-n">16</span><span class="pj-stat-l">Members</span></li>
+                <li><span class="pj-stat-n">4</span><span class="pj-stat-l">Domains</span></li>
+                <li><span class="pj-stat-n">2026</span><span class="pj-stat-l">Roster</span></li>
+            </ul>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="pj-main">
+            <!-- Filter Bar Controls -->
+            <div class="team-filter-bar">
+                <button class="filter-btn active" data-filter="all">All Sub-teams</button>
+                <button class="filter-btn" data-filter="propulsion">01 / Propulsion</button>
+                <button class="filter-btn" data-filter="airframe">02 / Airframe &amp; Recovery</button>
+                <button class="filter-btn" data-filter="avionics">03 / Avionics</button>
+                <button class="filter-btn" data-filter="webdev">04 / Web Dev &amp; Management</button>
+            </div>
+
+            <section class="team-section" aria-labelledby="coordinators-title">
+                <h2 class="team-section-title" id="coordinators-title">Coordinators</h2>
+                <div id="coordinator-grid-container" class="coordinator-cards-grid"></div>
+            </section>
+
+            <section class="team-section" aria-labelledby="subcoordinators-title">
+                <h2 class="team-section-title" id="subcoordinators-title">Subcoordinators</h2>
+                <div id="team-grid-container" class="team-cards-grid"></div>
+            </section>
+        </main>
+
+        <dialog class="photo-dialog" id="photo-dialog" aria-label="Expanded team photo">
+            <button class="photo-dialog-close" type="button" aria-label="Close photo">&times;</button>
+            <div class="photo-dialog-content">
+                <img src="" alt="">
+                <div class="photo-dialog-details">
+                    <h2 class="photo-dialog-name"></h2>
+                    <p class="photo-dialog-role"></p>
+                    <dl>
+                        <div><dt>Roll No.</dt><dd class="photo-dialog-roll-no"></dd></div>
+                        <div>
+                            <dt>LinkedIn</dt>
+                            <dd>
+                                <a class="photo-dialog-linkedin" href="" target="_blank" rel="noopener noreferrer">View profile</a>
+                                <span class="photo-dialog-linkedin-missing">Not provided</span>
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+        </dialog>
+
+        <!-- Footer -->
+        <footer class="pj-foot">
+            <a class="pj-back" href="/">&larr;&nbsp;&nbsp;Back to site</a>
+            <span class="footer-copy">&copy; 2026 Rocketry &amp; Aviation Club, IIT Patna.</span>
+        </footer>
+    </div>
+
+    <!-- Script Entry Point -->
+    <script type="module" src="/src/team.ts"></script>
+</body>
+</html>
